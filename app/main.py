@@ -30,7 +30,7 @@ if __name__ == '__main__':
     if st.button('Upload the dataset via GET fastapi',key='button1'):
         # st.session_state["button1"] = not st.session_state["button1"]
         # df = pd.read_csv('../data/master.csv')
-        response = requests.get("http://127.0.0.1:8070/data")
+        response = requests.get("http://eternalmech-analysis-of-suicidal-rates-7479.twc1.net/data")
         data = response.json()
         df = pd.DataFrame(data)
 
@@ -203,7 +203,7 @@ if __name__ == '__main__':
     """)
 
     st.write('# Cleaned and analysed dataset has been saved via POST fastapi')
-    url = 'http://127.0.0.1:8070/upload-dataframe/'
+    url = 'http://eternalmech-analysis-of-suicidal-rates-7479.twc1.net/upload-dataframe/'
 
     # Преобразуем DataFrame в JSON с использованием ориентации 'split'
     df_json = df.to_json(orient='split')
