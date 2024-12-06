@@ -27,7 +27,7 @@ if __name__ == '__main__':
     """)
 
     df = None
-    if st.button('Upload the dataset via GET fastapi',key='button1'):
+    if st.button('Download the dataset via GET fastapi',key='button1'):
         # st.session_state["button1"] = not st.session_state["button1"]
         # df = pd.read_csv('../data/master.csv')
         response = requests.get("http://eternalmech-analysis-of-suicidal-rates-7479.twc1.net/data")
