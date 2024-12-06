@@ -1,20 +1,18 @@
-import uvicorn
-from fastapi import FastAPI, Response, UploadFile, File, HTTPException
+# import uvicorn
+from fastapi import FastAPI, Response, HTTPException
 import pandas as pd
 from pydantic import BaseModel
 from typing import Any, Dict, List
-from fastapi.staticfiles import StaticFiles
+# from fastapi.staticfiles import StaticFiles
 import os
-from fastapi.responses import JSONResponse
+# from fastapi.responses import JSONResponse
 
 app = FastAPI()
-app.mount("/app", StaticFiles(directory="app", html=True), name="app")
 
 
 # get the dataset
 @app.get("/data")
 def get_iris_dataset():
-    # load the iris dataset
     data = pd.read_csv('data/master.csv')
 
     return Response(data.to_json(orient="records"), media_type="application/json")
