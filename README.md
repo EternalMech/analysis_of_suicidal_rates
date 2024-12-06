@@ -1,2 +1,1 @@
-To run app:
-```make run_app```
+Here is only back part of my app. The part will be deployed to a server.
