@@ -1,2 +1,1 @@
-To run app:
-```make run_app```
+Here is only front part of my project. Front and back will be hosted separately.
