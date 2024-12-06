@@ -23,6 +23,7 @@ if __name__ == '__main__':
     
     # Data preparation / Data cleanup
     So, lets look at the data we have:
+    (click the button to avoid exception and download the dataset)
     
     """)
 
