@@ -55,8 +55,7 @@ if __name__ == '__main__':
 
     st.dataframe(info)
 
-    st.write("""As you can see, most of the HDIForYear value is empty. Lets clean up the dataset by deleting useless
-                 column. """)
+    st.write("""Dataset has been cleared! """)
     st.write("""
     # Descriptive statistics
     Let's see at Descriptive statistics of our dataset:
@@ -181,6 +180,14 @@ if __name__ == '__main__':
             ---
                 Finally, lets see all dependencies between all datas we have colorizing by genders:
             """)
+
+    import plotly.express as px
+    plt.clf()
+    fig = px.scatter_matrix(df, dimensions=['year', 'suicides_no', 'population', 'gdp_per_capita ($)'],
+                            color='sex', color_discrete_sequence=["cyan", "pink"])
+    fig.update_traces(marker=dict(size=1))
+    st.plotly_chart(fig)
+
     plt.clf()
     sns.pairplot(df, hue="sex", palette='pastel')
     st.pyplot(plt)
