@@ -6,13 +6,14 @@ import requests
 import json
 
 import warnings
+
 warnings.filterwarnings('ignore')
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     st.write("""
     # Analysis the suicide rates
-    
+
     # Introduction
     In recent years, the examination of suicide rates has emerged as a critical area of 
     study within public health, shedding light on the complex interplay of societal, psychological, and demographic 
@@ -20,14 +21,14 @@ if __name__ == '__main__':
     focusing specifically on their variation across different age groups and over an extended period. By leveraging 
     robust data visualization and statistical techniques, the study aims to uncover meaningful trends and insights 
     that can inform policy-making and targeted interventions. 
-    
+
     # Data preparation / Data cleanup
     So, lets look at the data we have:
-    
+
     """)
 
     df = None
-    if st.button('Upload the dataset via GET fastapi',key='button1'):
+    if st.button('Upload the dataset via GET fastapi', key='button1'):
         # st.session_state["button1"] = not st.session_state["button1"]
         # df = pd.read_csv('../data/master.csv')
         response = requests.get("http://127.0.0.1:8070/data")
@@ -46,7 +47,7 @@ if __name__ == '__main__':
 
     st.write("""As you can see, most of the HDIForYear value is empty. Lets clean up the dataset by deleting useless
              column.
-             
+
              """)
     df = df.drop('HDI for year', axis=1)
 
@@ -55,8 +56,7 @@ if __name__ == '__main__':
 
     st.dataframe(info)
 
-    st.write("""As you can see, most of the HDIForYear value is empty. Lets clean up the dataset by deleting useless
-                 column. """)
+    st.write("""Dataset has been cleared! """)
     st.write("""
     # Descriptive statistics
     Let's see at Descriptive statistics of our dataset:
@@ -64,19 +64,19 @@ if __name__ == '__main__':
     st.dataframe(df.describe())
 
     st.write("""
-    
+
     # Hypothesis - Gender Disparity in Suicide Rates Across Generations
     A central element of the project is the hypothesis check.
     So, Let introduce Hypothesis.
-    
+
     Previous studies have indicated that suicide rates often exhibit significant gender
     disparities, with males typically having higher rates compared to females. However, societal changes and evolving
     gender roles across generations may influence these trends differently.
-    
+
     Formulation: “Across all generations, males exhibit higher suicide rates than females. However, the gender gap in
     suicide rates has narrowed in younger generations (e.g., Generation Z) compared to older generations
      (e.g., Baby Boomers).”
-    
+
     """)
 
     st.write("""
@@ -142,7 +142,7 @@ if __name__ == '__main__':
 
     st.write("""
     # Let's analyse suicidal rates over generations.
-    
+
     Creating multi-line plots to depict suicide rates for males and females across different generations.
     """)
 
@@ -154,7 +154,7 @@ if __name__ == '__main__':
     plt.clf()
     f, ax = plt.subplots(1, 2, figsize=(24, 8))
     data = df['generation'].value_counts().plot.pie(explode=[0.1, 0.1, 0.1, 0.1, 0.1, 0.1], autopct='%1.1f%%', ax=ax[0],
-                                               shadow=True)
+                                                    shadow=True)
     ax[0].set_title('Generations Count')
     ax[0].set_ylabel('Count')
     sns.countplot(df, ax=ax[0])
@@ -181,25 +181,34 @@ if __name__ == '__main__':
             ---
                 Finally, lets see all dependencies between all datas we have colorizing by genders:
             """)
+
+    import plotly.express as px
+
+    plt.clf()
+    fig = px.scatter_matrix(df, dimensions=['year', 'suicides_no', 'population', 'gdp_per_capita ($)'],
+                            color='sex', color_discrete_sequence=["cyan", "pink"])
+    fig.update_traces(marker=dict(size=1))
+    st.plotly_chart(fig)
+
     plt.clf()
     sns.pairplot(df, hue="sex", palette='pastel')
     st.pyplot(plt)
 
     st.write("""
     # Conclusion about hypothesis:
-    
+
     Upon analyzing the data, it was observed that:
      - Older Generations (Baby Boomers and Generation X): Males consistently exhibited higher suicide rates than 
      females, maintaining a substantial gender gap.
-     
+
      - Younger Generations (Millennials and Generation Z): While males still had higher suicide rates, the gap between
       males and females was notably smaller compared to older generations.
-      
+
       So, the data supports the hypothesis that males generally have higher suicide rates than females across all
       generations. Moreover, the gender disparity in suicide rates has diminished in younger generations,
       indicating a narrowing gap. This trend may reflect changing societal norms, increased mental health
       awareness among females, or evolving stressors affecting different genders across generations.
-    
+
     """)
 
     st.write('# Cleaned and analysed dataset has been saved via POST fastapi')
