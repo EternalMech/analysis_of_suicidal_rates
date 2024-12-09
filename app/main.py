@@ -36,7 +36,8 @@ if __name__ == '__main__':
         df = pd.DataFrame(data)
 
     if df is None:
-        raise Exception('You should upload a dataset to make analysis')
+        st.stop()
+        # raise Exception('You should upload a dataset to make analysis')
 
     st.dataframe(df.sample(5))  # higlight_max highlights the max value in column
 
